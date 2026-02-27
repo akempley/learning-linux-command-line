@@ -16,6 +16,17 @@ alias grep='grep --color=auto'
 # Make prompt user-friendly
 PS1='\[\e[32m\]\u@\h\[\e[m\]:\[\e[34m\]\w\[\e[m\]\$ '
 
+#Google from the command line
+google() {
+    search=""
+    for i in "$@"; do
+        search="$search%20$i"
+    done
+    echo "Searching Google for: $@"
+    # Works for WSL, Linux (xdg-open), or macOS (open)
+    xdg-open "http://www.google.com/search?q=$search" 2>/dev/null || open "http://www.google.com/search?q=$search"
+}
+
 # Only add to PATH if it isn't already there
 if [[ ":$PATH:" != *":$(pwd)/bin:"* ]]; then
     export PATH="$PATH:$(pwd)/bin"
